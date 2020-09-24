@@ -1,0 +1,30 @@
+endpoints:
+  all:
+    path: /management
+    sensitive: false # make all management endpoints public until security is added
+micronaut:
+  application:
+    name: micronaut-benchmark
+  io:
+    watch:
+      paths: src/main
+      restart: true
+---
+datasources:
+  default:
+    url: ${POSTGRES_URI:`jdbc:postgresql://localhost/benchmark?user=devuser&password=devpass`}
+    driverClassName: org.postgresql.Driver
+    dialect: POSTGRES
+
+jpa:
+  default:
+    packages-to-scan:
+      - 'com.blueground.app'
+
+flyway:
+  datasources:
+    default:
+      # flyway specific url can be set from
+      # FLYWAY_DATASOURCES_DEFAULT_URL
+      locations: classpath:databasemigrations
+---
